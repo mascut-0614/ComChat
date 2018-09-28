@@ -18,17 +18,17 @@ class ServerThread extends Thread{
   }
   public void run(){
     if(socket==null){
-
       return;
     }else{
-      System.out.printf("Thread Start No.%d\n",accessnumber);
+      System.out.printf("%d人目の参加者です。\n",accessnumber);
     }
+    Return_Mes("Start,"+Integer.toString(accessnumber)+"|");
     try(BufferedReader reader = new BufferedReader(
         new InputStreamReader(socket.getInputStream()))){
           while(true){
               String line=reader.readLine();
               if(line!=null){
-                this.controller.Send_Mes("No."+accessnumber+":"+line);
+                this.controller.Send_Mes(line);
               }else {
                 break;
               }

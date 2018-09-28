@@ -5,26 +5,21 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 class ThreadControl{
+  int player_sum=0;
   public void Add_Player(Socket socket,int accessnumber){
     synchronized(this){
-      if(accessnumber==0){
-        System.out.println("プレイヤーがチャットに参加しました");
-        threads[accessnumber]=new ServerThread(accessnumber,socket,this);
-        threads[accessnumber].start();
-        System.out.println("相手を探しています");
-      }else{
-        System.out.println("相手が見つかりました");
-        threads[accessnumber]=new ServerThread(accessnumber,socket,this);
-        threads[accessnumber].start();
-      }
+      System.out.println("プレイヤーがチャットに参加しました");
+      player_sum++;
+      threads[accessnumber]=new ServerThread(accessnumber,socket,this);
+      threads[accessnumber].start();
     }
   }
   public void Send_Mes(String mes){
     synchronized(this){
-      for(int i=0;i<2;i++){
+      for(int i=1;i<=player_sum;i++){
         threads[i].Return_Mes(mes);
       }
     }
   }
-  ServerThread threads[]=new ServerThread[2];
+  ServerThread threads[]=new ServerThread[9];
 }

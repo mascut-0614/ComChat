@@ -12,15 +12,18 @@ public class Test{
       server.bind(new InetSocketAddress(addr.getHostAddress(), 8080));
       Socket socket;
       System.out.println("接続要求を待ちます。");
-      for(int i=0;i<=1;i++){
+      int player_sum=0;
+      while(player_sum<8){
         try  {
           socket = server.accept();
-          controller.Add_Player(socket,i);
+          player_sum++;
+          controller.Add_Player(socket,player_sum);
         }catch(Exception e){
-          System.out.println("プレイヤーが揃いませんでした");
+          System.out.println("接続に失敗しました");
           System.exit(0);
         }
       }
+      System.out.println("人数が上限に達しました");
     } catch (Exception e) {
       System.out.println("接続が切れました");
       System.exit(0);
